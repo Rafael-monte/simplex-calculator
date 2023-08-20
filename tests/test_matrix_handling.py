@@ -35,6 +35,12 @@ class TestMatrixHandling(unittest.TestCase):
        self.ks=[
            4, 2
        ]
+       self.matriz_A=[
+           [1, 2, 4, -1, 1, 0, 0],
+           [2, 3, -1, 1, 0, 1, 0],
+           [1, 0, 1,  1, 0, 0, 1]
+       ]
+       self.indices_base={5,6,7}
 
     def test_deve_retornar_multiplicador_simplex_ao_informar_base_e_vetor_constantes_da_base(self):
         for i in range(len(self.multiplicadores)):
@@ -58,3 +64,8 @@ class TestMatrixHandling(unittest.TestCase):
             non_base=self.nao_bases[i]
             y=matrixes.get_y(base_matrix=base_matrix, non_base_matrix=non_base, k=k)
             self.assertTrue(np.array_equal(y, self.ys[i]))
+
+    def test_deve_retornar_a_matriz_base_ao_informar_matriz_A_e_indices_base(self):
+        matriz_identidade=self.matrizes_base[0]
+        matriz_base=matrixes.pick_base_matrix_by_index_columns(self.matriz_A, self.indices_base)
+        self.assertTrue(np.array_equal(matriz_identidade, matriz_base))
