@@ -1,2 +1,6 @@
-./resources/__pycache__
-./tests/__pycache__
+resources/__pycache__/
+tests/__pycache__/
+resources/__pycache__/*
+tests/__pycache__/*
+.vscode/
+.vscode/*
