@@ -26,7 +26,7 @@ def get_Ɛ_and_basis_outgoing_index(base_x, y) -> tuple[float, int]:
 	min_reason=float('inf')
 	i_min_reason=0
 	for (i_reason, reason) in enumerate(reason_values):
-		if reason >= 0 and reason > min_reason:
+		if reason >= 0 and reason < min_reason:
 			min_reason=reason
 			i_min_reason=i_reason
 	return (min_reason, i_min_reason)
