@@ -47,7 +47,7 @@ def transpose(line_vector):
     """
     return np.array(line_vector).reshape(-1, 1)
 
-def get_parcial_weights_by_non_base_non_base_constants_and_simplex_multiplier(non_base, non_base_constants, λt):
+def get_parcial_weights_by_non_base_non_base_constants_and_simplex_multiplier(non_base, non_base_constants, λt) -> list[float]:
 	"""
 	Calcula os pesos parciais, dados a não-base, constantes da não-base e multiplicador simplex\n
 	\tEquação:\n
