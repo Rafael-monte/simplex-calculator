@@ -42,10 +42,12 @@ class TestMatrixHandling(unittest.TestCase):
        ]
        self.indices_base={5,6,7}
        self.pesos_parciais=[
-            [-2, -1, 3, -5]
+            [-2, -1, 3, -5],
+            [3, -1, 8, 5]
        ]
        self.constantes_nao_base=[
-           [-2, -1, 3, -5]
+           [-2, -1, 3, -5],
+           [-2, -1, 3, 0]
        ]
 
     def test_deve_retornar_multiplicador_simplex_ao_informar_base_e_vetor_constantes_da_base(self):
@@ -77,8 +79,9 @@ class TestMatrixHandling(unittest.TestCase):
         self.assertTrue(np.array_equal(matriz_identidade, matriz_base))
 
     def test_deve_retornar_pesos_parciais_ao_informar_matriz_nao_base_constantes_nao_base_e_multiplicador_simplex(self):
-        nao_base=self.nao_bases[0]
-        constantes_nao_base=self.constantes_nao_base[0]
-        λt=self.multiplicadores[0]
-        pesos_parciais=matrixes.get_parcial_weights_by_non_base_non_base_constants_and_simplex_multiplier(nao_base, constantes_nao_base, λt)
-        self.assertTrue(np.array_equal(pesos_parciais, self.pesos_parciais[0]))
+        for i in range(len(self.pesos_parciais)):
+            nao_base=self.nao_bases[i]
+            constantes_nao_base=self.constantes_nao_base[i]
+            λt=self.multiplicadores[i]
+            pesos_parciais=matrixes.get_parcial_weights_by_non_base_non_base_constants_and_simplex_multiplier(nao_base, constantes_nao_base, λt)
+            self.assertTrue(np.array_equal(pesos_parciais, self.pesos_parciais[i]))
