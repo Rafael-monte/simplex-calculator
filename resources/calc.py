@@ -1,3 +1,5 @@
+import numpy as np
+
 def get_Cnk_and_k(parcial_weights: list[float]) -> tuple[float, int]:
 	"""
 	Pega o menor peso dos pesos parciais:\n
@@ -30,4 +32,4 @@ def get_Ɛ_and_basis_outgoing_index(base_x, y) -> tuple[float, int]:
 			min_reason=reason
 			i_min_reason=i_reason
 	return (min_reason, i_min_reason)
-
+	

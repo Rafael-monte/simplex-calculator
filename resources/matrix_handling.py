@@ -47,3 +47,17 @@ def transpose(line_vector):
     """
     return np.array(line_vector).reshape(-1, 1)
 
+def get_parcial_weights_by_non_base_non_base_constants_and_simplex_multiplier(non_base, non_base_constants, λt):
+	"""
+	Calcula os pesos parciais, dados a não-base, constantes da não-base e multiplicador simplex\n
+	\tEquação:\n
+	\tĈnj = Cnj - λt * anj, j={1,2,..., n} 
+	"""
+	parcial_weights=[]
+	for i in range(len(non_base_constants)):
+		cnj=non_base_constants[i]
+		anj=transpose(non_base[:, i])
+		λtanj=np.dot(λt, anj)
+		parcial_weight=(cnj - λtanj)[0]
+		parcial_weights.append(parcial_weight)
+	return parcial_weights
