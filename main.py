@@ -2,8 +2,6 @@ import resources.calc as calculos
 import resources.matrix_handling as matrizes
 import numpy as np
 
-
-
 iteracoes=0
 solucao_otima_encontrada = False
 def apply_simplex(coeficientes_equacao_minimizacao, matriz_A, indices_base, indices_nao_base, matriz_resultado):
@@ -77,17 +75,17 @@ def apply_simplex(coeficientes_equacao_minimizacao, matriz_A, indices_base, indi
 
 # Definições
 # Matriz A
-matriz_A=np.array([[1, 2, 4, -1, 1, 0, 0], [2, 3, -1, 1, 0, 1, 0], [1, 0, 1, 1, 0, 0, 1]])
+matriz_A=np.array([[1, 2, 3, 1, 0], [3, 2, 3, 0, 1]])
 
 # Coeficientes da equação de minimização
-coeficientes_equacao_minimizacao=np.array([-2, -1, 3, -5, 0, 0, 0])
+coeficientes_equacao_minimizacao=np.array([-1, -9, -3, 0, 0])
 
 # Indices
-indices_base=np.array([5, 6, 7])
-indices_nao_base=np.array([1, 2, 3, 4])
+indices_base=np.array([1, 2])
+indices_nao_base=np.array([3, 4, 5])
 
 # Matriz Resultado (b)
-matriz_resultado=np.array([[6], [12], [4]])
+matriz_resultado=np.array([[9], [15]])
 
 apply_simplex(coeficientes_equacao_minimizacao=coeficientes_equacao_minimizacao,
               matriz_A=matriz_A,
