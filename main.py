@@ -64,34 +64,30 @@ def apply_simplex(coeficientes_equacao_minimizacao, matriz_A, indices_base, indi
             matriz_resultado=matriz_resultado
         )
     else:
-        solucao_final= f"[{''.join(f'X{i}, ' for i in range(len(coeficientes_equacao_minimizacao)+1))}]"
+        solucao_final= f"[{''.join(f'X{i+1}, ' for i in range(len(coeficientes_equacao_minimizacao)))}]"
         indice_ultima_virgula=solucao_final.rfind(", ")
         if indice_ultima_virgula != -1:
             solucao_final = solucao_final[:indice_ultima_virgula] + solucao_final[indice_ultima_virgula+2:]
-        valores_solucao=[0 for _ in range(len(coeficientes_equacao_minimizacao) + 1)]
+        valores_solucao=[0 for _ in range(len(coeficientes_equacao_minimizacao))]
         count=0
         for (indice_linha, indice_base) in enumerate(indices_base):
-            valores_solucao[indice_base]=solucao_basica[indice_linha][0]
-            count+=1
+            valores_solucao[indice_base - 1]=solucao_basica[indice_linha][0]
         print(f'Solução final = {solucao_final} = {valores_solucao}')
-        #coeficientes_solucao_final = [str(solucao_basica[][0]) for i in indices_base]
-        #solucao_final = f"[{''.join(f'X{i}' for i in range(len(coeficientes_equacao_minimizacao)))}] = [{','.join(coeficientes_solucao_final)}]"
-        #print(f"Solução final: {solucao_final}")
         return solucao_basica
 
 # Definições
 # Matriz A
-matriz_A=np.array([[1,2,3,1,0], [3,2,3,0,1]])
+matriz_A=np.array([[1, 2, 4, -1, 1, 0, 0], [2, 3, -1, 1, 0, 1, 0], [1, 0, 1, 1, 0, 0, 1]])
 
 # Coeficientes da equação de minimização
-coeficientes_equacao_minimizacao=np.array([-1, -9, -3, 0, 0])
+coeficientes_equacao_minimizacao=np.array([-2, -1, 3, -5, 0, 0, 0])
 
 # Indices
-indices_base=np.array([1, 2])
-indices_nao_base=np.array([3,4,5])
+indices_base=np.array([5, 6, 7])
+indices_nao_base=np.array([1, 2, 3, 4])
 
 # Matriz Resultado (b)
-matriz_resultado=np.array([[9], [15]])
+matriz_resultado=np.array([[6], [12], [4]])
 
 apply_simplex(coeficientes_equacao_minimizacao=coeficientes_equacao_minimizacao,
               matriz_A=matriz_A,
