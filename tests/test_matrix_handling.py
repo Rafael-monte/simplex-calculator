@@ -71,7 +71,7 @@ class TestMatrixHandling(unittest.TestCase):
     def test_deve_retornar_y_ao_informar_base_nao_base_e_fator_k(self):
         for i in range(len(self.ys)):
             base_matrix=self.matrizes_base[i]
-            k=self.ks[i]
+            k=self.ks[i] - 1 # Indice normalizado
             non_base=self.nao_bases[i]
             y=matrixes.get_y(base_matrix=base_matrix, non_base_matrix=non_base, k=k)
             self.assertTrue(np.array_equal(y, self.ys[i]))

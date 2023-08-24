@@ -8,11 +8,17 @@ iteracoes=0
 solucao_otima_encontrada = False
 def apply_simplex(coeficientes_equacao_minimizacao, matriz_A, indices_base, indices_nao_base, matriz_resultado):
     # Fase I: Atualização
+    print(f'-----------------------Atualização-----------------------')
     matriz_base = matrizes.pick_matrix_by_index_columns(matriz_A, indices_base)
     matriz_nao_base = matrizes.pick_matrix_by_index_columns(matriz_A, indices_nao_base)
     constantes_base = matrizes.get_constants_by_indexes(coeficientes_equacao_minimizacao, indices_base)
     constantes_nao_base = matrizes.get_constants_by_indexes(coeficientes_equacao_minimizacao, indices_nao_base)
-
+    print(f'Indices Base = {indices_base}')
+    print(f'Indices não base = {indices_nao_base}')
+    print(f'B={matriz_base}')
+    print(f'N={matriz_nao_base}')
+    print(f'Cbt={constantes_base}')
+    print(f'Cnt={constantes_nao_base}')
     global iteracoes
     global solucao_otima_encontrada
     # Iniciando iteracao
@@ -30,7 +36,7 @@ def apply_simplex(coeficientes_equacao_minimizacao, matriz_A, indices_base, indi
     print(f'Cnjs={custos_parciais}')
     # Passo 2iii: Calcular Cnk e k
     (cnk, k) = calculos.get_Cnk_and_k(custos_parciais)
-    print(f'Cnk = {cnk}\nk={k}, logo N{k} entra na base')
+    print(f'Cnk = {cnk}\nk={k + 1}, logo N{k + 1} entra na base')
     # Passo 3: Cnk >= 0?
     if (cnk >= 0): solucao_otima_encontrada = True
     # Passo 4: Y
@@ -40,7 +46,7 @@ def apply_simplex(coeficientes_equacao_minimizacao, matriz_A, indices_base, indi
     if matrizes.is_matrix_less_or_equal_empty(y): raise Exception("O problema não possui solução pois Y <= 0")
     # Epsilon
     (epsilon, indice_saida) = calculos.get_Ɛ_and_basis_outgoing_index(solucao_basica, y)
-    print(f'Ɛ={epsilon}, logo B{indice_saida} sai da base')
+    print(f'Ɛ={epsilon}, logo B{indice_saida + 1} sai da base')
 
     if iteracoes > solucao_basica.shape[0] + 1:
         raise Exception('O problema não possui solucao')
@@ -57,9 +63,21 @@ def apply_simplex(coeficientes_equacao_minimizacao, matriz_A, indices_base, indi
             indices_nao_base=indices_nao_base,
             matriz_resultado=matriz_resultado
         )
-
-    print(f'Solução básica encontrada = {solucao_basica}')
-    return solucao_basica
+    else:
+        solucao_final= f"[{''.join(f'X{i}, ' for i in range(len(coeficientes_equacao_minimizacao)+1))}]"
+        indice_ultima_virgula=solucao_final.rfind(", ")
+        if indice_ultima_virgula != -1:
+            solucao_final = solucao_final[:indice_ultima_virgula] + solucao_final[indice_ultima_virgula+2:]
+        valores_solucao=[0 for _ in range(len(coeficientes_equacao_minimizacao) + 1)]
+        count=0
+        for (indice_linha, indice_base) in enumerate(indices_base):
+            valores_solucao[indice_base]=solucao_basica[indice_linha][0]
+            count+=1
+        print(f'Solução final = {solucao_final} = {valores_solucao}')
+        #coeficientes_solucao_final = [str(solucao_basica[][0]) for i in indices_base]
+        #solucao_final = f"[{''.join(f'X{i}' for i in range(len(coeficientes_equacao_minimizacao)))}] = [{','.join(coeficientes_solucao_final)}]"
+        #print(f"Solução final: {solucao_final}")
+        return solucao_basica
 
 # Definições
 # Matriz A

@@ -23,7 +23,6 @@ def get_y(base_matrix, non_base_matrix, k):
     Retorna Y dadas as matrizes base e não base, junto ao fator k. \n
     Equação:\n\tY = B^-1 an_(k)
     """
-    k-=1 # Índice normalizado
     base_inverse = np.linalg.inv(base_matrix)
     k_column=transpose(non_base_matrix[:, k])
     y=np.dot(base_inverse, k_column)
