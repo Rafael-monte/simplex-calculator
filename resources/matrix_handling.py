@@ -23,23 +23,22 @@ def get_y(base_matrix, non_base_matrix, k):
     Retorna Y dadas as matrizes base e não base, junto ao fator k. \n
     Equação:\n\tY = B^-1 an_(k)
     """
-    k-=1
     base_inverse = np.linalg.inv(base_matrix)
     k_column=transpose(non_base_matrix[:, k])
     y=np.dot(base_inverse, k_column)
     return y
 
-def pick_base_matrix_by_index_columns(A_matrix, base_columns_indexes: set[int]):
+def pick_matrix_by_index_columns(A_matrix, columns_indexes: set[int]):
     """
-    Retorna a matriz base ao informar a matriz A e os indices da base
+    Retorna uma submatriz ao informar a matriz A e os indices dos vetores
     """
     A_matrix=np.array(A_matrix)
-    base_matrix=np.array([[] for i in base_columns_indexes])
-    for column_index in base_columns_indexes:
-        column_index-=1
+    matrix=np.array([[] for _ in range(A_matrix.shape[0])])
+    for column_index in columns_indexes:
+        column_index-=1 # Índice normalizado
         column=transpose(A_matrix[:, column_index])
-        base_matrix = np.hstack((base_matrix, column))
-    return base_matrix
+        matrix = np.hstack((matrix, column))
+    return matrix
 
 def transpose(line_vector):
     """
@@ -61,3 +60,23 @@ def get_parcial_weights_by_non_base_non_base_constants_and_simplex_multiplier(no
 		parcial_weight=(cnj - λtanj)[0]
 		parcial_weights.append(parcial_weight)
 	return parcial_weights
+
+def get_constants_by_indexes(minimization_equation_constants: list[float], indexes: list[int]) -> list[float]:
+     """
+     Busca as constantes da equação de minimização dados os indices
+     """
+     constants=[]
+     for index in indexes:
+        index-=1 # Índice normalizado
+        for (i_equation_constant, equation_constant) in enumerate(minimization_equation_constants):
+             if i_equation_constant == index:
+                  constants.append(equation_constant)
+     return constants
+
+
+def is_matrix_less_or_equal_empty(y)->bool:
+    num_columns=y.shape[0]
+    for column_index in range(num_columns):
+         if y[column_index][0] > 0:
+              return False
+    return True
