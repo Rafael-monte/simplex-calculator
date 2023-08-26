@@ -23,8 +23,11 @@ def get_Ɛ_and_basis_outgoing_index(base_x, y) -> tuple[float, int]:
 	"""
 	reason_values=[]
 	for i_line in range(len(y[:, 0])):
-		reason=base_x[i_line][0]/y[i_line][0]
-		reason_values.append(reason)
+		if y[i_line][0] != 0:
+			reason=base_x[i_line][0]/y[i_line][0]
+		else:
+			reason=float('inf')
+			reason_values.append(reason)
 	min_reason=float('inf')
 	i_min_reason=0
 	for (i_reason, reason) in enumerate(reason_values):
